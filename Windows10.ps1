@@ -9,9 +9,10 @@
 Clear-Host
 # Variables
 
-$computername = "Vega"
+$computername = "Bhoomi"
 function RemoveNotRequiredApps {
 Write-Host "Removing Not Required Metro Apps"
+Write-Host "---------------------------------------------------"
 # Uninstall Packages
 
 # 3D Builder
