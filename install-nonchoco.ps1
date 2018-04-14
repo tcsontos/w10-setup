@@ -32,7 +32,6 @@ $SysinternalDirectory = "SysInternalTools"
 $Tools_Install_Directory = "C:\Tools"
 $ADB_Install_Directory = "C:\Tools\android-tools"
 $Sysinternal_Install_Directory = "C:\Tools\SysInternalTools"
-$SysinternalShortcuts_Install_Directory = "C:\Tools\SysInternalTools"
 $DockerInstaller = "Docker for Windows Installer.exe"
 
 
@@ -82,15 +81,21 @@ function InstallYubikeyTools {
 
 
 # StartupScripts
-function CopyStartupScripts {
-    Write-Host "Copying Startup Scripts"
-
+function CopyStartupItems {
+    Write-Host "Copying Startup Items"
+    $sourceRoot = ".\Shortcuts"
+    $destinationRoot = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
+    Copy-Item -Path $sourceRoot -Filter "*.lnk" -Recurse -Destination $destinationRoot -Container
 
 }
 
 # Sysinternal Tools
 function InstallSysInternalTools {
     Write-Host "Installing SysInternal Tools"
+    $sourceRoot = ".\SysInternals"
+    $destinationRoot = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\SysInternal"
+    Copy-Item -Path $sourceRoot -Filter "*.lnk" -Recurse -Destination $destinationRoot -Container
+
 }
 
 # ADB Tools 
@@ -99,10 +104,6 @@ Write-Host "Adding Adb Tools to System PATH"
 
 }
 
-# AutoMount VHDs
-function SetupMountTasks {
-    Write-Host "Setting UP Auto Mount VDHs in File: C:\Tools\attach_vdisk.txt"
-}
 
 # LinuxBoot
 # Copy the first 512 bytes of Linux partition into a file linux.bin 
@@ -124,7 +125,8 @@ function InstallDocker {
 
 
 
-fucntion SetupBuiltinFeatures {
+function SetupBuiltinFeatures {
+    
      # Disable IE, SMD Direct, Powershell v2, Work Folders etc.
      Disable-WindowsOptionalFeature -Online -FeatureName "Xps-Foundation-Xps-Viewer" -NoRestart
      Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Printing-XPSServices-Package" -NoRestart
@@ -155,8 +157,10 @@ fucntion SetupBuiltinFeatures {
 }
 
 # On Non Domain Windows Install AppIdentity Service cannot be started as its a 
-# Protected service. Edit Registry to make it automatic, for Applocker to function.
+# Protected service. Edit Registry or use sc.exe to make it automatic, for Applocker to function.
 function EnableAppIdentityService {
+    Write-Host "Enabling AppIdentity Service to Automatic"
+    sc.exe config appidsvc start= auto
 }
    
 # Install Non Chocolaty Apps.
@@ -166,10 +170,9 @@ Write-Host "Installing Non-Chocolatey Apps"
 Write-Host "---------------------------------------------"
 Write-Host "---------------------------------------------"
 InstallYubikeyTools
-CopyStartupScripts
+CopyStartupItems
 InstallSysInternalTools
 InstallADBTools
-SetupMountTasks
 SetupLinuxBoot
 SetupBuiltinFeatures
 EnableAppIdentityService
