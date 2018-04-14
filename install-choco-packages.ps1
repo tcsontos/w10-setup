@@ -46,4 +46,9 @@ choco install -y pandoc
 Write-Host "Git"
 Write-Host "---------------------------------------------------"
 choco install -y git.install
-
+Write-Host "Google Chrome"
+Write-Host "---------------------------------------------------"
+choco install googlechrome
+Write-Host "SysInternals"
+Write-Host "---------------------------------------------------"
+choco install sysinternals
