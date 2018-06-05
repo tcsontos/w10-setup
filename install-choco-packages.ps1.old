@@ -1,0 +1,115 @@
+#choco config set virusScannerType Generic
+#choco config set genericVirusScannerPath "\Program Files\Norton Security\Engine\version\NAVW32"
+#choco config set genericVirusScannerPath "C:\Program Files\Norton Security\Engine\22.11.2.7\navw32.exe"
+#choco config set genericVirusScannerArgs "[[File]]"
+#choco feature enable -n virusCheck
+Write-Host "Installing Apps"
+Write-Host "7Zip"
+Write-Host "---------------------------------------------------"
+choco install -y -r 7zip.install 
+Write-Host "Visual Studio Code"
+Write-Host "---------------------------------------------------"
+choco install -y -r visualstudiocode
+Write-Host "Notepad++"
+Write-Host "---------------------------------------------------"
+choco install -y -r notepadplusplus
+Write-Host "VLC"
+Write-Host "---------------------------------------------------"
+choco install -y -r vlc
+Write-Host "Firefox"
+Write-Host "---------------------------------------------------"
+choco install -y -r firefox
+Write-Host "Recuva"
+Write-Host "---------------------------------------------------"
+choco install -y -r recuva
+Write-Host "Teamviewver"
+Write-Host "---------------------------------------------------"
+choco install -y -r teamviewer
+Write-Host "Putty"
+Write-Host "---------------------------------------------------"
+choco install -y -r putty.install 
+Write-Host "WinSCP"
+Write-Host "---------------------------------------------------"
+choco install -y -r winscp.install
+Write-Host "Skype"
+Write-Host "---------------------------------------------------"
+choco install -y -r skype
+Write-Host "MikTeX"
+Write-Host "---------------------------------------------------"
+choco install -y -r miktex.install
+Write-Host "TeXStudio"
+Write-Host "---------------------------------------------------"
+choco install -y -r texstudio
+Write-Host "Pandoc"
+Write-Host "---------------------------------------------------"
+choco install -y -r pandoc
+Write-Host "Git"
+Write-Host "---------------------------------------------------"
+choco install -y -r git.install
+Write-Host "Google Chrome"
+Write-Host "---------------------------------------------------"
+choco install -y -r googlechrome
+Write-Host "SysInternals"
+Write-Host "---------------------------------------------------"
+choco install -y -r sysinternals  --package-parameters='/InstallDir=""C:\Tools\SysInternals""'
+Write-Host "GPG4Win"
+Write-Host "---------------------------------------------------"
+choco install -y -r gpg4win
+Write-Host "VcxSrv"
+Write-Host "---------------------------------------------------"
+choco install -y -r vcxsrv 
+Write-Host "ConEmu"
+Write-Host "---------------------------------------------------" 
+choco install -y -r conemu
+Write-Host "Git Credential Manager"
+Write-Host "---------------------------------------------------" 
+choco install -y -r git-credential-manager-for-windows
+
+Write-Host "Installing Programing Languages"
+Write-Host "---------------------------------------------------"
+Write-Host "Python 3"
+choco install -y -r anaconda3 -ia '/InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D=""C:\Program Files\Python3.5\""'
+Write-Host "Changing ChocolateyToolsLocation To C:\"
+$Env:ChocolateyToolsLocation = "C:\"
+Write-Host "Installing GoLang"
+choco install -y -r golang
+
+Write-Host "Docker, Kubernetes and VM Tools"
+Write-Host "---------------------------------------------------"
+Write-Host "Docker"
+choco install -y -r docker-for-windows 
+Write-Host "Kubernetes CLI"
+choco install -y -r kubernetes-cli
+Write-Host "MiniKube"
+choco install -y -r minikube
+Write-Host "Docker Kitematic"
+choco install -y -r docker-kitematic
+Write-Host "Kubernetes Kompose" 
+choco install -y -r kubernetes-kompose
+Write-Host "Vagrant"
+choco install -y -r vagrant 
+
+Write-Host "Cloud SDK and CLIs"
+Write-Host "---------------------------------------------------"
+Write-Host "Google Cloud SDK"
+choco install -y -r gcloudsdk
+Write-Host "AWS CLI"
+choco install -y -r awscli
+
+Write-Host "Cloud Storage"
+Write-Host "---------------------------------------------------"
+Write-Host "Drive"
+choco install google-backup-and-sync 
+Write-Host "Dropbox"
+choco install -y -r dropbox
+
+Write-Host "Other Tools"
+Write-Host "---------------------------------------------------"
+choco install -y -r audacity 
+
+Write-Host "Yubico Tools"
+Write-Host "---------------------------------------------------"
+choco install -y -r yubico-authenticator
+choco install -y -r yubikey-personalization-tool
+choco install -y -r yubikey-manager
+choco install -y -r yubikey-piv-manager 

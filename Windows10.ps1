@@ -6,6 +6,8 @@
 # $bundlefamilies = (get-appxpackage -packagetype Bundle).packagefamilyname
 # get-appxpackage -packagetype main |? {-not ($bundlefamilies -contains $_.packagefamilyname)} |% {add-appxpackage -register -disabledevelopmentmode ($_.installlocation + "\appxmanifest.xml")}
 
+# Please Run "Set-ExecutionPolicy -Scope Process Unrestricted -Force" in elevated Powersheell before running this script. 
+
 Clear-Host
 # Variables
 
@@ -19,9 +21,9 @@ Write-Host "---------------------------------------------------"
 Get-AppxPackage Microsoft.3DBuilder | Remove-AppxPackage
 Get-AppxPackage Microsoft.Print3D | Remove-AppxPackage
 Get-AppxPackage Microsoft.Microsoft3DViewer | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.HolographicFirstRun | Remove-AppxPackage
 
-
+# Email and Calender 
+Get-AppxPackage microsoft.windowscommunicationsapps | Remove-AppxPackage
 # Alarms
 Get-AppxPackage Microsoft.WindowsAlarms | Remove-AppxPackage
 
@@ -33,6 +35,7 @@ Get-AppxPackage Microsoft.BingFinance | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingNews | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingSports | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingWeather | Remove-AppxPackage
+
 
 # Candy Crush
 Get-AppxPackage king.com.CandyCrush* | Remove-AppxPackage
@@ -77,8 +80,6 @@ Get-AppxPackage Microsoft.People | Remove-AppxPackage
 # Phone
 Get-AppxPackage Microsoft.WindowsPhone | Remove-AppxPackage
 
-# Photos
-Get-AppxPackage Microsoft.Windows.Photos | Remove-AppxPackage
 
 # Skype (Metro version)
 Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage
@@ -111,6 +112,9 @@ Get-AppxPackage Microsoft.XboxGameOverlay | Remove-AppxPackage
 Get-AppxPackage Microsoft.XboxSpeechToTextOverlay  | Remove-AppxPackage
 Get-AppxPackage XboxGameCallableUI | Remove-AppxPackage
 Get-AppxPackage Xbox.TCUI | Remove-AppxPackage
+# 1803
+Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage
+Get-AppxPackage Microsoft.Wallet | Remove-AppxPackage
 
 }
 
@@ -191,27 +195,7 @@ Function DisableAppSuggestions {
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsConsumerFeatures" -Type DWord -Value 1
 }
 
-function WindowsUpdateTweaks {
-Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings -Name UxOption -Type DWord -Value 1
-Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config -Name DODownloadMode -Type DWord -Value 1
-Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization -Name SystemSettingsDownloadMode -Type DWord -Value 3
 
-}
-
-# Stop and disable Diagnostics Tracking Service
-Function DisableDiagTrack {
-	Write-Host "Stopping and disabling Diagnostics Tracking Service..."
-	Stop-Service "DiagTrack" -WarningAction SilentlyContinue
-	Set-Service "DiagTrack" -StartupType Disabled
-}
-
-
-# Stop and disable WAP Push Service
-Function DisableWAPPush {
-	Write-Host "Stopping and disabling WAP Push Service..."
-	Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
-	Set-Service "dmwappushservice" -StartupType Disabled
-}
 
 
 # Set BIOS time to UTC
@@ -241,22 +225,69 @@ if ($env:computername -ne $computername) {
 }
 }
 
+
+
+function SetupBuiltinFeatures {
+    
+	# Disable IE, SMD Direct, Powershell v2, Work Folders etc.
+
+    # XPS is not included in 1803 Builds so this command will fail. Ignore it.
+	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Printing-XPSServices-Package" -NoRestart
+    Disable-WindowsOptionalFeature -Online -FeatureName "FaxServicesClientPackage" -NoRestart
+    Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx3-OC-Package" -NoRestart
+    Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Client-EmbeddedExp-Package" -NoRestart
+    Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx3-WCF-OC-Package" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2Root" -NoRestart 
+	Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx-VCRedist-Package" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "SmbDirect" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "NetFx4-AdvSrvs" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "MSRDC-Infrastructure" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "NetFx4Extended-ASPNET45" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "WorkFolders-Client" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "MSRDC-Infrastructure" -NoRestart
+	Disable-WindowsOptionalFeature -Online -FeatureName "Internet-Explorer-Optional-amd64" -NoRestart
+
+	# Enable Features: Containers, WSL, HyperV
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-All" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Hypervisor" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Tools-All" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Management-PowerShell" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Management-Clients" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Hypervisor" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Services" -NoRestart
+	Enable-WindowsOptionalFeature -Online -FeatureName "Containers" -NoRestart
+
+	# Careful With Enabling This Feature.
+	# Enable-WindowsOptionalFeature -Online -FeatureName "Windows-Defender-ApplicationGuard" -NoRestart
+}
+
+# On Non Domain Windows Install AppIdentity Service cannot be started as its a 
+# Protected service. Edit Registry or use sc.exe to make it automatic, for Applocker to function.
+function EnableAppIdentityService {
+   Write-Host "Enabling AppIdentity Service to Automatic"
+   sc.exe config appidsvc start= auto
+}
+
+
 function InstallChoco {
     Write-Host "Installing Chocolaty"
-	Set-ExecutionPolicy AllSigned -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+	iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
+
+
 
 RemoveNotRequiredApps
 DisableXboxGamebar
 TurnoffPeople
-DisableTelemetry
+#DisableTelemetry
 DisableWiFiSense
 DisableWebSearch
 DisableAppSuggestions
-WindowsUpdateTweaks
-DisableDiagTrack
-DisableWAPPush
 SetBIOSTimeUTC
 OtherTweaks
 RenamePC
-InstallChoco
+#InstallChoco
+SetupBuiltinFeatures
+EnableAppIdentityService

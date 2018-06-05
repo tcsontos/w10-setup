@@ -1,0 +1,81 @@
+<?xml version=”1.0″ encoding=”utf-8″?>
+<policyDefinitions xmlns:xsd=”http://www.w3.org/2001/XMLSchema” xmlns:xsi=”http://www.w3.org/2001/XMLSchema-instance” revision=”0.9″ schemaVersion=”1.0″ xmlns=”http://www.microsoft.com/GroupPolicy/PolicyDefinitions”>
+<policyNamespaces>
+<target prefix=”Putty” namespace=”Microsoft.Policies.Putty” />
+<using prefix=”windows” namespace=”Microsoft.Policies.Windows” />
+</policyNamespaces>
+<supersededAdm fileName=”Putty.adm” />
+<resources minRequiredRevision=”1.0″ fallbackCulture=”uz-UZ-Cyrl”/>
+<supportedOn>
+<definitions>
+<definition name=”PuttySoftware” displayName=”$(string.PuttySoftware)”/>
+</definitions>
+</supportedOn>
+<categories>
+<category name=”Putty” displayName=”$(string.Name)” explainText=”$(string.Description)”>
+<parentCategory ref=”windows” />
+<seeAlso> None </seeAlso>
+<keywords> Putty </keywords>
+</category>
+</categories>
+<policies>
+<policy name=”Log File Name” class=”User” displayName=”$(string.LogFileNamePolicy)” explainText=”$(string.DescriptionLogFileNamePolicy)” presentation=”$(presentation.LogFileName)” key=”SoftwareSimonTathamPuTTYSessionsDefault%20Settings”>
+<parentCategory ref=”Putty” />
+<supportedOn ref=”PuttySoftware” />
+<elements>
+<text id=”txtLogFileName” valueName=”LogFileName” soft=”false”/>
+</elements>
+</policy>
+<policy name=”Log Type” class=”User” displayName=”$(string.LogTypePolicy)” explainText=”$(string.DescriptionLogTypePolicy)” presentation=”$(presentation.LogTypePolicy)” key=”SoftwareSimonTathamPuTTYSessionsDefault%20Settings” valueName=”LogType”>
+<parentCategory ref=”Putty” />
+<supportedOn ref=”PuttySoftware” />
+<elements>
+<enum id=”LogTypeDPL” valueName=”LogType” required=”true”>
+<item displayName=”$(string.LogTypeItem1)”>
+<value>
+<decimal value=”0″ />
+</value>
+</item>
+<item displayName=”$(string.LogTypeItem2)”>
+<value>
+<decimal value=”1″ />
+</value>
+</item>
+<item displayName=”$(string.LogTypeItem3)”>
+<value>
+<decimal value=”2″ />
+</value>
+</item>
+<item displayName=”$(string.LogTypeItem4)”>
+<value>
+<decimal value=”3″ />
+</value>
+</item>
+</enum>
+</elements>
+</policy>
+<policy name=”Log File CLash” class=”User” displayName=”$(string.LogFileClashPolicy)” explainText=”$(string.DescriptionLogFileClashPolicy)” presentation=”$(presentation.LogFileClash)” key=”SoftwareSimonTathamPuTTYSessionsDefault%20Settings” valueName=”LogFileClash”>
+<parentCategory ref=”Putty” />
+<supportedOn ref=”PuttySoftware” />
+<elements>
+<enum id=”LogFileClashDPL” valueName=”LogFileClash” required=”true”>
+<item displayName=”$(string.LogFileClashItem1)”>
+<value>
+<decimal value=”0″ />
+</value>
+</item>
+<item displayName=”$(string.LogFileClashItem2)”>
+<value>
+<decimal value=”1″ />
+</value>
+</item>
+<item displayName=”$(string.LogFileClashItem3)”>
+<value>
+<decimal value=”4294967295″ />
+</value>
+</item>
+</enum>
+</elements>
+</policy>
+</policies>
+</policyDefinitions>

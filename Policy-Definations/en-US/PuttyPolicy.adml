@@ -1,0 +1,37 @@
+    <?xml version=”1.0″ encoding=”utf-8″?>
+    <policyDefinitionResources xmlns:xsd=”http://www.w3.org/2001/XMLSchema” xmlns:xsi=”http://www.w3.org/2001/XMLSchema-instance” revision=”1.0″ schemaVersion=”1.0″ xmlns=”http://www.microsoft.com/GroupPolicy/PolicyDefinitions”>
+    <displayName>Putty log configuration</displayName>
+    <description>This template includes the policies to manage Putty terminal client logging options</description>
+    <resources>
+    <stringTable>
+    <string id=”PuttySoftware”>Putty</string>
+
+    <string id=”Name”>Putty</string>
+    <string id=”Description”>Putty Terminal Software</string>
+    <string id=”LogFileNamePolicy”>Log File Name</string>
+    <string id=”DescriptionLogFileNamePolicy”>Set the log file path and name.</string>
+    <string id=”LogTypePolicy”>Log Type</string>
+    <string id=”DescriptionLogTypePolicy”>Defines the Log type.</string>
+    <string id=”LogTypeItem1″>Logging off</string>
+    <string id=”LogTypeItem2″>Printable output</string>
+    <string id=”LogTypeItem3″>All session output</string>
+    <string id=”LogTypeItem4″>SSH packets</string>
+    <string id=”LogFileClashPolicy”>Overwrite policy</string>
+    <string id=”DescriptionLogFileClashPolicy”></string>
+    <string id=”LogFileClashItem1″>Ask the User</string>
+    <string id=”LogFileClashItem2″>Overwrite</string>
+    <string id=”LogFileClashItem3″>Append</string>
+    </stringTable>
+    <presentationTable>
+    <presentation id=”LogFileName”>
+    <textBox refId=”txtLogFileName”><label>Log file name</label></textBox>
+    </presentation>
+    <presentation id=”LogTypePolicy”>
+    <dropdownList refId=”LogTypeDPL” defaultItem=”0″>Log Type:</dropdownList>
+    </presentation>
+    <presentation id=”LogFileClash”>
+    <dropdownList refId=”LogFileClashDPL” defaultItem=”0″>What to do is log file already exists:</dropdownList>
+    </presentation>
+    </presentationTable>
+    </resources>
+    </policyDefinitionResources>

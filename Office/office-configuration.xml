@@ -1,0 +1,11 @@
+<Configuration>
+    <Add OfficeClientEdition="64" Channel="Targeted" ForceUpgrade="TRUE">
+    <Product ID="O365HomePremRetail">
+      <Language ID="MatchOS" />
+    </Product>
+  </Add>
+    <Updates Enabled="TRUE" Channel="Targeted"/>
+  <Display Level="None" AcceptEULA="TRUE" />
+  <Logging Level="Standard" Path="%temp%" /> 
+  <Property Name="PinIconsToTaskbar" Value="TRUE"/>
+</Configuration>
