@@ -1,5 +1,5 @@
 <Configuration>
-    <Add OfficeClientEdition="64" Channel="Targeted" ForceUpgrade="TRUE">
+    <Add OfficeClientEdition="32" Channel="Targeted" ForceUpgrade="TRUE">
     <Product ID="O365HomePremRetail">
       <Language ID="MatchOS" />
     </Product>
