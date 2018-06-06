@@ -14,7 +14,7 @@ Clear-Host
 $computername = "Bhoomi"
 function RemoveNotRequiredApps {
 Write-Host "Removing Not Required Metro Apps"
-Write-Host "---------------------------------------------------"
+Write-Host "-------------------------------------------------------------------"
 # Uninstall Packages
 
 # 3D Builder
@@ -230,7 +230,7 @@ if ($env:computername -ne $computername) {
 function SetupBuiltinFeatures {
     
 	# Disable IE, SMD Direct, Powershell v2, Work Folders etc.
-
+	Writ-Host "Disabling Windows Features"
     # XPS is not included in 1803 Builds so this command will fail. Ignore it.
 	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Printing-XPSServices-Package" -NoRestart
     Disable-WindowsOptionalFeature -Online -FeatureName "FaxServicesClientPackage" -NoRestart
@@ -248,6 +248,7 @@ function SetupBuiltinFeatures {
 	Disable-WindowsOptionalFeature -Online -FeatureName "MSRDC-Infrastructure" -NoRestart
 	Disable-WindowsOptionalFeature -Online -FeatureName "Internet-Explorer-Optional-amd64" -NoRestart
 
+	Writ-Host "Enabling Windows Features"
 	# Enable Features: Containers, WSL, HyperV
 	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart
 	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-All" -NoRestart
@@ -259,8 +260,8 @@ function SetupBuiltinFeatures {
 	Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Services" -NoRestart
 	Enable-WindowsOptionalFeature -Online -FeatureName "Containers" -NoRestart
 
-	# Careful With Enabling This Feature.
-	# Enable-WindowsOptionalFeature -Online -FeatureName "Windows-Defender-ApplicationGuard" -NoRestart
+	# Careful With Enabling This Feature on Non UEFI devices.
+	Enable-WindowsOptionalFeature -Online -FeatureName "Windows-Defender-ApplicationGuard" -NoRestart
 }
 
 # On Non Domain Windows Install AppIdentity Service cannot be started as its a 
@@ -291,3 +292,5 @@ RenamePC
 #InstallChoco
 SetupBuiltinFeatures
 EnableAppIdentityService
+
+Write-Host "-------------------------------------------------------------------"

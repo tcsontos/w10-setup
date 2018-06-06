@@ -29,7 +29,7 @@ $ToolsDirectory = "Tools"
 $ShortcutsDirectory = "Shortcuts"
 $SysinternalDirectory = "SysInternalTools"
 $Tools_Install_Directory = "C:\Tools"
-$ADB_Install_Directory = "C:\Tools\android-tools"
+$ADB_Install_Directory = "C:\Tools\Android"
 
 
 # Check if path exists, if not create the directory.
@@ -117,29 +117,29 @@ function SetupLinuxBoot {
 
 function InstallOfficeAndVisio {
 Write-Host "Installing Office 365"
-.\Office\setup.exe /configure .\Office\office-configuration.xml
 
+# For 64 Bit
+.\Office\setup.exe /configure .\Office\configuration.xml
+
+# For 32 Bit
+#.\Office\setup.exe /configure .\Office\configuration-32.xml
 }
 
 fucntion Install Anaconda {
 Write-Host "Installing Anaconda"
-.\Anaconda3-5.1.0-Windows-x86_64.exe /InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D=""C:\Anaconda 3\""
+.\Anaconda3-5.1.0-Windows-x86_64.exe /InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D=""C:\Anaconda3\""
 
 } 
 # Install Non Chocolaty Apps.
 # Installers Must be present in Current Folder.
 
 Write-Host "Installing Non-Chocolatey Apps"
-Write-Host "---------------------------------------------"
-Write-Host "---------------------------------------------"
+Write-Host "-------------------------------------------------------------------"
+Write-Host "-------------------------------------------------------------------"
 #--- Handled by Choco ---#
 #InstallYubikeyTools
 #InstallYubikeyTools_OM 
 #------------------------#
 InstallOfficeAndVisio
 #CopyStartupItems
-#InstallSysInternalTools
-AddItemsToPath
 #SetupLinuxBoot
-#SetupBuiltinFeatures
-#EnableAppIdentityService
