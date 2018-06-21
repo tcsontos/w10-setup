@@ -42,7 +42,11 @@ $services = @(
     "XblGameSave"                              # Xbox Live Game Save Service
 
     "XboxNetApiSvc"                            # Xbox Live Networking Service
-
+    "DusmSvc"                                  # Data Usage manager
+    "lfsvc"                                    # Geolocaion Service
+    "SysMain"                                  # Superfetch
+    "TabletInputService"                       # CTF loader
+    "WinHttpAutoProxySvc"                      # Proxy auto discovery
 
 
     # Services which cannot be disabled
