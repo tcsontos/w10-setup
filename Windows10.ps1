@@ -231,12 +231,12 @@ function SetupBuiltinFeatures {
     
 	# Disable IE, SMD Direct, Powershell v2, Work Folders etc.
 	Writ-Host "Disabling Windows Features"
-    # XPS is not included in 1803 Builds so this command will fail. Ignore it.
+    	# XPS is not included in 1803 Builds so this command will fail. Ignore it.
 	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Printing-XPSServices-Package" -NoRestart
-    Disable-WindowsOptionalFeature -Online -FeatureName "FaxServicesClientPackage" -NoRestart
-    Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx3-OC-Package" -NoRestart
-    Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Client-EmbeddedExp-Package" -NoRestart
-    Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx3-WCF-OC-Package" -NoRestart
+    	Disable-WindowsOptionalFeature -Online -FeatureName "FaxServicesClientPackage" -NoRestart
+    	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx3-OC-Package" -NoRestart
+    	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Client-EmbeddedExp-Package" -NoRestart
+    	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx3-WCF-OC-Package" -NoRestart
 	Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2Root" -NoRestart 
 	Disable-WindowsOptionalFeature -Online -FeatureName "MicrosoftWindowsPowerShellV2" -NoRestart
 	Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-NetFx-VCRedist-Package" -NoRestart
@@ -262,6 +262,11 @@ function SetupBuiltinFeatures {
 
 	# Careful With Enabling This Feature on Non UEFI devices.
 	Enable-WindowsOptionalFeature -Online -FeatureName "Windows-Defender-ApplicationGuard" -NoRestart
+	
+	# Windows Defender Tweaks
+	Write-Host "Enabling PUA Protection in Defender"
+	Set-MpPreference -PUAProtection Enabled
+
 }
 
 # On Non Domain Windows Install AppIdentity Service cannot be started as its a 
